@@ -1,0 +1,22 @@
+{
+  "name": "skyq-webapp",
+  "version": "1.0.0",
+  "description": "SkyQ.com In-Flight QR Web Application with 3 Databases, Bilingual Quiz & Lucky Roulette",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "seed": "node scripts/seed.js",
+    "dev": "node --watch src/server.js"
+  },
+  "keywords": [
+    "aviation",
+    "skyq",
+    "in-flight",
+    "quiz",
+    "roulette",
+    "sqlite",
+    "bilingual"
+  ],
+  "author": "SkyQ Aviation Systems",
+  "license": "ISC"
+}

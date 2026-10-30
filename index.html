@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkyQ.com - In-Flight Experience & Quiz</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ====================================================================
+       BACKGROUND AIRPLANE FIGURES & CONTRAILS
+       Requirements: "the background will be baby blue with dark blue font.
+       During the quiz, the page will have a white rectangle where the
+       answers will be, and outside that square it will have airplane
+       figures in the background."
+       ==================================================================== -->
+  <div class="sky-background-layer" aria-hidden="true">
+    <!-- Airplane 1: Top Left Jet -->
+    <svg class="airplane-fig ap-top-left" viewBox="0 0 100 100">
+      <path d="M 10 50 L 35 46 L 55 24 L 50 24 L 30 46 L 20 46 L 15 37 L 10 37 L 12 46 L 0 47 L -8 41 L -12 41 L -6 48 L -18 49 L -6 50 L -12 57 L -8 57 L 0 51 L 12 52 L 10 61 L 15 61 L 20 52 L 30 52 L 50 74 L 55 74 L 35 52 Z" />
+    </svg>
+
+    <!-- Airplane 2: Top Right Jet -->
+    <svg class="airplane-fig ap-top-right" viewBox="0 0 100 100">
+      <path d="M 10 50 L 35 46 L 55 24 L 50 24 L 30 46 L 20 46 L 15 37 L 10 37 L 12 46 L 0 47 L -8 41 L -12 41 L -6 48 L -18 49 L -6 50 L -12 57 L -8 57 L 0 51 L 12 52 L 10 61 L 15 61 L 20 52 L 30 52 L 50 74 L 55 74 L 35 52 Z" />
+    </svg>
+
+    <!-- Airplane 3: Mid Left Jet -->
+    <svg class="airplane-fig ap-mid-left" viewBox="0 0 100 100">
+      <path d="M 10 50 L 35 46 L 55 24 L 50 24 L 30 46 L 20 46 L 15 37 L 10 37 L 12 46 L 0 47 L -8 41 L -12 41 L -6 48 L -18 49 L -6 50 L -12 57 L -8 57 L 0 51 L 12 52 L 10 61 L 15 61 L 20 52 L 30 52 L 50 74 L 55 74 L 35 52 Z" />
+    </svg>
+
+    <!-- Airplane 4: Mid Right Jet -->
+    <svg class="airplane-fig ap-mid-right" viewBox="0 0 100 100">
+      <path d="M 10 50 L 35 46 L 55 24 L 50 24 L 30 46 L 20 46 L 15 37 L 10 37 L 12 46 L 0 47 L -8 41 L -12 41 L -6 48 L -18 49 L -6 50 L -12 57 L -8 57 L 0 51 L 12 52 L 10 61 L 15 61 L 20 52 L 30 52 L 50 74 L 55 74 L 35 52 Z" />
+    </svg>
+
+    <!-- Airplane 5: Bottom Left Jet -->
+    <svg class="airplane-fig ap-bot-left" viewBox="0 0 100 100">
+      <path d="M 10 50 L 35 46 L 55 24 L 50 24 L 30 46 L 20 46 L 15 37 L 10 37 L 12 46 L 0 47 L -8 41 L -12 41 L -6 48 L -18 49 L -6 50 L -12 57 L -8 57 L 0 51 L 12 52 L 10 61 L 15 61 L 20 52 L 30 52 L 50 74 L 55 74 L 35 52 Z" />
+    </svg>
+
+    <!-- Airplane 6: Bottom Right Jet -->
+    <svg class="airplane-fig ap-bot-right" viewBox="0 0 100 100">
+      <path d="M 10 50 L 35 46 L 55 24 L 50 24 L 30 46 L 20 46 L 15 37 L 10 37 L 12 46 L 0 47 L -8 41 L -12 41 L -6 48 L -18 49 L -6 50 L -12 57 L -8 57 L 0 51 L 12 52 L 10 61 L 15 61 L 20 52 L 30 52 L 50 74 L 55 74 L 35 52 Z" />
+    </svg>
+  </div>
+
+  <div class="app-wrapper">
+    <!-- APP HEADER -->
+    <header class="app-header">
+      <div class="header-inner">
+        <div class="brand-section" id="brandLogoLink">
+          <img src="assets/logo.svg" alt="SkyQ.com Logo" class="brand-logo-img">
+          <span class="domain-pill" data-i18n="domainBadge">SkyQ.com</span>
+        </div>
+
+        <div class="header-actions">
+          <button type="button" class="btn-utility" id="btnShowQr">
+            <span>📱</span> <span data-i18n="btnShowQr">Boarding Pass QR</span>
+          </button>
+          <button type="button" class="btn-utility" id="btnDatabaseViewer">
+            <span>🗄️</span> <span data-i18n="btnDatabaseViewer">3 Databases Inspector</span>
+          </button>
+          <button type="button" class="btn-utility" id="btnEmailsViewer">
+            <span>✉️</span> <span data-i18n="btnEmailsViewer">Sent Emails</span>
+          </button>
+
+          <!-- BILINGUAL LANGUAGE SELECTOR (English / Romanian) -->
+          <div class="language-selector" role="group" aria-label="Language selection">
+            <button type="button" class="lang-btn active" data-lang="en">🇬🇧 EN</button>
+            <button type="button" class="lang-btn" data-lang="ro">🇷🇴 RO</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN APP CONTENT -->
+    <main class="main-content">
+
+      <!-- STEPPER NAVIGATION BAR -->
+      <nav class="stepper-bar" aria-label="Progress">
+        <div class="step-item active" data-step="welcome">
+          <div class="step-number">1</div>
+          <span data-i18n="welcomeTag">Welcome</span>
+        </div>
+        <div class="step-item" data-step="form">
+          <div class="step-number">2</div>
+          <span data-i18n="formTitle">Passenger Info</span>
+        </div>
+        <div class="step-item" data-step="quiz">
+          <div class="step-number">3</div>
+          <span data-i18n="quizHeaderTitle">Quiz (10 Qs)</span>
+        </div>
+        <div class="step-item" data-step="results">
+          <div class="step-number">4</div>
+          <span data-i18n="resultsTitle">Results</span>
+        </div>
+        <div class="step-item" data-step="roulette">
+          <div class="step-number">5</div>
+          <span data-i18n="rouletteTitle">Roulette</span>
+        </div>
+      </nav>
+
+      <!-- ================================================================
+           STEP 1: WELCOMING MESSAGE SCREEN
+           User Requirement:
+           "When you scan it, you will see a welcoming message before you
+           click and then the page where you have to introduce first and
+           last name, flight number, and the date of the flight."
+           ================================================================ -->
+      <section id="step-welcome" class="step-view active">
+        <div class="welcome-card">
+          <div class="welcome-badge" data-i18n="welcomeTag">Official SkyQ In-Flight Experience</div>
+          <h1 data-i18n="welcomeTitle">Welcome aboard SkyQ.com</h1>
+          <p class="welcome-subtitle" data-i18n="welcomeSubtitle">
+            Thank you for flying with us today! Test your aviation knowledge with our 10-question challenge.
+            Score 10 out of 10 and spin the Lucky Roulette to win exclusive luxury gifts delivered directly to your email!
+          </p>
+
+          <div class="welcome-features">
+            <div class="feature-box">
+              <div class="icon">✈️</div>
+              <h3 data-i18n="welcomeFeature1Title">10 Aviation Questions</h3>
+              <p data-i18n="welcomeFeature1Desc">Randomized questions & answers testing your flight knowledge.</p>
+            </div>
+            <div class="feature-box">
+              <div class="icon">🎡</div>
+              <h3 data-i18n="welcomeFeature2Title">Exclusive Roulette</h3>
+              <p data-i18n="welcomeFeature2Desc">Answer all 10 correctly to unlock the wheel of luxury travel gifts.</p>
+            </div>
+            <div class="feature-box">
+              <div class="icon">🎁</div>
+              <h3 data-i18n="welcomeFeature3Title">Instant Delivery</h3>
+              <p data-i18n="welcomeFeature3Desc">Receive your prize voucher code & pickup desk location via email.</p>
+            </div>
+          </div>
+
+          <button type="button" class="btn-primary-action" id="btnStartExperience" data-i18n="welcomeStartBtn">
+            Start Experience ➔
+          </button>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           STEP 2: PASSENGER & FLIGHT DETAILS FORM
+           User Requirement:
+           "the page where you have to introduce first and last name, flight
+           number, and the date of the flight. If they are not completed
+           correctly you will not go to the next step which will be the quiz."
+           ================================================================ -->
+      <section id="step-form" class="step-view">
+        <div class="form-card">
+          <div class="card-header-block">
+            <h2 data-i18n="formTitle">Passenger & Flight Verification</h2>
+            <p data-i18n="formSubtitle">
+              Please introduce your flight credentials as stated on your boarding pass. All fields are verified before starting the quiz.
+            </p>
+          </div>
+
+          <div id="formBannerError" class="form-banner-error"></div>
+
+          <form id="passengerForm" novalidate>
+            <div class="form-grid">
+              <!-- First Name -->
+              <div class="form-group">
+                <label for="inputFirstName">
+                  <span data-i18n="labelFirstName">First Name</span> <span class="req">*</span>
+                </label>
+                <div class="input-wrapper">
+                  <span class="input-icon">👤</span>
+                  <input type="text" id="inputFirstName" class="form-input" data-i18n-ph="phFirstName" placeholder="e.g. Alexander" required>
+                </div>
+                <div id="errFirstName" class="input-error-msg"></div>
+              </div>
+
+              <!-- Last Name -->
+              <div class="form-group">
+                <label for="inputLastName">
+                  <span data-i18n="labelLastName">Last Name</span> <span class="req">*</span>
+                </label>
+                <div class="input-wrapper">
+                  <span class="input-icon">👤</span>
+                  <input type="text" id="inputLastName" class="form-input" data-i18n-ph="phLastName" placeholder="e.g. Vancea" required>
+                </div>
+                <div id="errLastName" class="input-error-msg"></div>
+              </div>
+
+              <!-- Email Address -->
+              <div class="form-group full-width">
+                <label for="inputEmail">
+                  <span data-i18n="labelEmail">Email Address</span> <span class="req">*</span>
+                </label>
+                <div class="input-wrapper">
+                  <span class="input-icon">✉️</span>
+                  <input type="email" id="inputEmail" class="form-input" data-i18n-ph="phEmail" placeholder="e.g. alexander.vancea@example.com" required>
+                </div>
+                <div id="errEmail" class="input-error-msg"></div>
+                <div class="input-hint" data-i18n="hintEmail">Your gift voucher & pickup instructions will be emailed here.</div>
+              </div>
+
+              <!-- Flight Number -->
+              <div class="form-group">
+                <label for="inputFlightNumber">
+                  <span data-i18n="labelFlightNumber">Flight Number</span> <span class="req">*</span>
+                </label>
+                <div class="input-wrapper">
+                  <span class="input-icon">✈️</span>
+                  <input type="text" id="inputFlightNumber" class="form-input" data-i18n-ph="phFlightNumber" placeholder="e.g. SQ 402 or RO 302" required>
+                </div>
+                <div id="errFlightNumber" class="input-error-msg"></div>
+                <div class="input-hint" data-i18n="hintFlightNumber">2-letter airline code followed by flight number.</div>
+              </div>
+
+              <!-- Flight Date -->
+              <div class="form-group">
+                <label for="inputFlightDate">
+                  <span data-i18n="labelFlightDate">Date of the Flight</span> <span class="req">*</span>
+                </label>
+                <div class="input-wrapper">
+                  <span class="input-icon">📅</span>
+                  <input type="date" id="inputFlightDate" class="form-input" required>
+                </div>
+                <div id="errFlightDate" class="input-error-msg"></div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn-primary-action" id="btnSubmitForm" data-i18n="btnProceedToQuiz">
+                Proceed to Quiz ➔
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           STEP 3: THE QUIZ (THE PROMINENT WHITE RECTANGLE)
+           User Requirements:
+           "The quizz will be made of 10 questions with 4 choices of answer,
+           all of them will be listed at once, but the order they will be
+           placed on the interface will be random and also the questions
+           will be randomly taken from a list of 10."
+           "During the quiz, the page will have a white rectangle where the
+           answers will be, and outside that square it will have airplane
+           figures in the background."
+           ================================================================ -->
+      <section id="step-quiz" class="step-view">
+        <div class="quiz-white-rectangle">
+          <!-- Quiz Top Info -->
+          <div class="quiz-top-info">
+            <div class="quiz-title-area">
+              <h2 data-i18n="quizHeaderTitle">SkyQ Aviation Challenge</h2>
+              <p data-i18n="quizHeaderSubtitle">
+                Answer all 10 questions below. All questions are listed at once in randomized order. Select one answer per question.
+              </p>
+            </div>
+            <div class="passenger-flight-badge">
+              <span>👤 <strong id="badgePassengerName">Passenger</strong></span>
+              <span>✈️ <strong id="badgeFlightInfo">SQ 402</strong></span>
+            </div>
+          </div>
+
+          <!-- Progress Tracker Bar -->
+          <div class="quiz-progress-sticky">
+            <span id="quizProgressText">0 / 10 Answered</span>
+            <div class="progress-track">
+              <div id="quizProgressFill" class="progress-fill"></div>
+            </div>
+          </div>
+
+          <!-- Dynamic Questions Container (All 10 listed at once) -->
+          <div id="questionsContainer" class="questions-list">
+            <!-- Injected by JavaScript -->
+          </div>
+
+          <!-- Quiz Footer Submit -->
+          <div class="quiz-footer-actions">
+            <div id="quizWarningText" class="quiz-warning-text"></div>
+            <button type="button" class="btn-primary-action" id="btnSubmitQuiz" data-i18n="btnSubmitQuiz">
+              Submit Answers ➔
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           STEP 4: RESULTS SCREEN
+           User Requirements:
+           "After selecting an answer for each question, you will go to the
+           next page which will tell you how many answers you got right and
+           then if you respond to all of them correctly you will be able to
+           go to the next page which will be a roulette..."
+           ================================================================ -->
+      <section id="step-results" class="step-view">
+        <div class="results-card">
+          <div id="resultsBannerBadge" class="results-banner-badge">🏆</div>
+          <h2 data-i18n="resultsTitle">Quiz Results</h2>
+
+          <div class="score-display-box">
+            <div id="resultsScoreNumber" class="score-number">10 / 10</div>
+            <div id="resultsScoreCaption" class="score-caption">You got 10 out of 10 answers right!</div>
+          </div>
+
+          <div class="results-message-box">
+            <h3 id="resultsMessageTitle">🎉 Outstanding! 10 out of 10 Perfect Score!</h3>
+            <p id="resultsMessageDesc">
+              Flawless aeronautical knowledge! You have unlocked the exclusive SkyQ Lucky Roulette. Spin the wheel to claim your luxury prize!
+            </p>
+          </div>
+
+          <div class="results-actions">
+            <button type="button" class="btn-primary-action" id="btnGoToRoulette" data-i18n="btnGoToRoulette">
+              Proceed to Lucky Roulette ➔
+            </button>
+            <button type="button" class="btn-utility" id="btnRetryQuiz" style="display:none;" data-i18n="btnRetryQuiz">
+              Retake Quiz with New Questions 🔄
+            </button>
+          </div>
+
+          <!-- Explanations breakdown -->
+          <div class="breakdown-accordion">
+            <h4 data-i18n="resultsBreakdownTitle">Answer Review & Detailed Explanations</h4>
+            <div id="breakdownList">
+              <!-- Injected by JavaScript -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           STEP 5: ROULETTE SCREEN (SPIN WHEEL & WIN A GIFT)
+           User Requirements:
+           "...a roulette in which you will win a gift and an email will be
+           sent on your account about information of your gift and where
+           you can pick it up."
+           ================================================================ -->
+      <section id="step-roulette" class="step-view">
+        <div class="roulette-card">
+          <div class="roulette-header">
+            <h2 data-i18n="rouletteTitle">SkyQ Lucky Roulette</h2>
+            <p data-i18n="rouletteSubtitle">
+              Spin the wheel to win your exclusive SkyQ traveler gift! An official confirmation email with your voucher code and pickup location will be sent immediately.
+            </p>
+          </div>
+
+          <div class="roulette-stage">
+            <div class="roulette-wheel-container">
+              <canvas id="rouletteCanvas" width="420" height="420"></canvas>
+            </div>
+
+            <div class="roulette-controls">
+              <button type="button" class="btn-spin-wheel" id="btnSpinRoulette" data-i18n="btnSpinRoulette">
+                SPIN THE WHEEL ✈️
+              </button>
+            </div>
+          </div>
+
+          <!-- Award Won Card (revealed after wheel lands) -->
+          <div id="winnerAwardCard" class="winner-award-card">
+            <div class="winner-icon">🎁</div>
+            <h3 id="winnerPrizeTitle" class="winner-title">VIP Lounge Day Pass</h3>
+            <p id="winnerPrizeDesc" class="winner-desc">Complimentary access to the exclusive SkyQ Executive Lounge.</p>
+
+            <div class="winner-voucher-box">
+              <div class="voucher-label" data-i18n="labelClaimCode">Your Claim Code:</div>
+              <div id="winnerClaimCode" class="voucher-code">SKYQ-GIFT-7849</div>
+            </div>
+
+            <div class="pickup-info-box">
+              <div class="loc-title" data-i18n="labelPickupLocation">Where to pick it up:</div>
+              <div id="winnerPickupLoc" class="loc-text">Airport Terminal 1, SkyQ Lounge Reception (Gate B4)</div>
+            </div>
+
+            <div>
+              <div class="email-dispatched-pill">
+                <span>✉️</span>
+                <span>
+                  <span data-i18n="labelEmailNotice">A confirmation email has been dispatched to:</span>
+                  <strong id="winnerEmailRecipient">passenger@email.com</strong>
+                </span>
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+              <button type="button" class="btn-utility" id="btnViewEmailFromAward" data-i18n="btnViewDispatchedEmail">
+                Preview Sent Email ✉️
+              </button>
+              <button type="button" class="btn-primary-action" id="btnBackHome" data-i18n="btnBackHome">
+                Finish & Return Home
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ====================================================================
+       MODAL 1: QR CODE BOARDING PASS MODAL
+       Allows anyone to scan and open SkyQ.com on mobile
+       ==================================================================== -->
+  <div id="modalQrCode" class="modal-overlay">
+    <div class="modal-container" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 data-i18n="modalQrTitle">Scan QR Code for SkyQ.com</h3>
+        <button type="button" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body qr-modal-content">
+        <p data-i18n="modalQrDesc" style="color:var(--color-text-muted); font-size:14px;">
+          Scan this QR code with your mobile smartphone camera at the airport or in-flight to open SkyQ.com immediately.
+        </p>
+        <div class="qr-code-frame">
+          <img id="qrCodeImage" src="/api/qr" alt="SkyQ.com QR Code" style="display:block; width:220px; height:220px;">
+        </div>
+        <div>
+          <div style="font-size:12px; color:#64748b;" data-i18n="modalQrUrlLabel">Access URL:</div>
+          <div id="qrModalUrl" class="qr-url-pill">http://localhost:3000 (SkyQ.com)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL 2: 3 DATABASES ARCHITECTURE INSPECTOR
+       User Requirement:
+       "The project needs 3 databases, one for the client information,
+       one for the questions and their correct answers and another one
+       for the answers given to the quiz, and awards won by whatever client."
+       ==================================================================== -->
+  <div id="modalDatabaseViewer" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 data-i18n="modalDbTitle">SkyQ 3-Database System Architecture</h3>
+        <button type="button" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="db-tabs">
+          <button type="button" class="db-tab-btn active" data-tab-target="tabDbClients" data-i18n="modalDbTab1">
+            1. Clients Database (clients.db)
+          </button>
+          <button type="button" class="db-tab-btn" data-tab-target="tabDbQuestions" data-i18n="modalDbTab2">
+            2. Questions Database (questions.db)
+          </button>
+          <button type="button" class="db-tab-btn" data-tab-target="tabDbAwards" data-i18n="modalDbTab3">
+            3. Quiz & Awards Database (quiz_awards.db)
+          </button>
+        </div>
+
+        <!-- Tab 1: Clients Database -->
+        <div id="tabDbClients" class="db-tab-content db-table-wrapper" style="display:block;">
+          <table class="table-custom">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Passenger Name</th>
+                <th>Email</th>
+                <th>Flight No</th>
+                <th>Flight Date</th>
+                <th>Registered At</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyClients">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Tab 2: Questions Database -->
+        <div id="tabDbQuestions" class="db-tab-content db-table-wrapper" style="display:none;">
+          <table class="table-custom">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Question (English)</th>
+                <th>Correct Key</th>
+                <th>Category</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyQuestions">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Tab 3: Quiz & Awards Database -->
+        <div id="tabDbAwards" class="db-tab-content db-table-wrapper" style="display:none;">
+          <table class="table-custom">
+            <thead>
+              <tr>
+                <th>Claim Code</th>
+                <th>Prize Won</th>
+                <th>Email Recipient</th>
+                <th>Email Status</th>
+                <th>Won At</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyAwards">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL 3: SENT EMAILS MONITOR
+       Displays the exact HTML email dispatched to client's account
+       ==================================================================== -->
+  <div id="modalEmailsViewer" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 data-i18n="modalEmailsTitle">SkyQ Email Dispatcher Monitor</h3>
+        <button type="button" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="emailsListContainer">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/i18n.js"></script>
+  <script src="js/confetti.js"></script>
+  <script src="js/roulette.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

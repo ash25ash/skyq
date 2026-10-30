@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" width="240" height="60">
+  <defs>
+    <linearGradient id="planeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#0a2540" />
+    </linearGradient>
+  </defs>
+  <!-- Stylized Airplane Icon -->
+  <g transform="translate(10, 8)">
+    <circle cx="22" cy="22" r="21" fill="#e0f2fe" stroke="#38bdf8" stroke-width="2"/>
+    <path d="M 22 8 L 26 18 L 38 22 L 26 25 L 25 35 L 21 31 L 20 35 L 18 25 L 6 22 L 18 18 Z" fill="url(#planeGrad)" />
+  </g>
+  <!-- Text: SkyQ -->
+  <text x="64" y="38" font-family="'Segoe UI', Roboto, -apple-system, sans-serif" font-weight="900" font-size="32" fill="#0a2540" letter-spacing="-0.5">Sky<tspan fill="#0284c7">Q</tspan></text>
+  <text x="148" y="28" font-family="'Segoe UI', Roboto, -apple-system, sans-serif" font-weight="700" font-size="12" fill="#0369a1" letter-spacing="0.5">.com</text>
+  <text x="66" y="49" font-family="'Segoe UI', Roboto, -apple-system, sans-serif" font-weight="600" font-size="9" fill="#475569" letter-spacing="1.5">IN-FLIGHT CONCIERGE</text>
+</svg>
